@@ -14,7 +14,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'To do list',
       theme: ThemeData(
-        fontFamily: 'iranYekan'
+        fontFamily: 'iranYekan',
+        scaffoldBackgroundColor: Colors.grey[200]
+
       ),
       home: const HomeScreen(),
     );
