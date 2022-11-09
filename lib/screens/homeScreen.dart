@@ -33,10 +33,10 @@ class HomeScreenState extends State<HomeScreen> {
                       ),
                       Icon(Icons.menu),
                     ],
-                  ),
+                  ), //appBar
                   Container(
                     padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.only(top: 20),
+                    margin: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10)),
@@ -59,7 +59,48 @@ class HomeScreenState extends State<HomeScreen> {
                         )
                       ],
                     ),
-                  )
+                  ),
+                  Expanded(
+                      child: ListView.builder(
+                          itemCount: 10,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              margin: const EdgeInsets.only(bottom: 10),
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'کارها شماره 1',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey[800],
+                                        ),
+                                      ),
+                                      Text(
+                                        'توضیحات کار شماره 1توضیحات کار شماره 1',
+                                        style: TextStyle(
+                                          color: Colors.grey[600],
+                                        ),
+                                      )
+                                    ],
+                                  )),
+                                  const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                    size: 20,
+                                  )
+                                ],
+                              ),
+                            );
+                          }))
                 ],
               ),
             ),
