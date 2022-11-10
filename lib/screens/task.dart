@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
+import 'package:todoapp/widgets/to_do_widgets.dart';
+
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
 
@@ -42,7 +44,15 @@ class TaskScreenState extends State<TaskScreen> {
                         ),
                       ))
                     ],
-                  )
+                  ),
+                  Expanded(
+                      child: ListView(
+                    children:  [
+                      ToDoWidgets(title: 'ثبت دامنه',isDone: true),
+                      ToDoWidgets(title: 'استخدام برنامه نویس',isDone: false),
+                      ToDoWidgets(title: 'ساخت قالب',isDone: false),
+                    ],
+                  ))
                 ],
               ),
             ),
