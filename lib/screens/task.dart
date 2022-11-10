@@ -45,14 +45,49 @@ class TaskScreenState extends State<TaskScreen> {
                       ))
                     ],
                   ),
+                  const TextField(
+                    decoration: InputDecoration(
+                      hintText: 'توضیح کار خود رو وراد کنید',
+                      border: InputBorder.none,
+                    ),
+                    minLines: 1,
+                    maxLines: 3,
+                  ),
                   Expanded(
-                      child: ListView(
-                    children:  [
-                      ToDoWidgets(title: 'ثبت دامنه',isDone: true),
-                      ToDoWidgets(title: 'استخدام برنامه نویس',isDone: false),
-                      ToDoWidgets(title: 'ساخت قالب',isDone: false),
+                      child: Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: ListView(
+                      children: [
+                        ToDoWidgets(title: 'ثبت دامنه', isDone: true),
+                        ToDoWidgets(
+                            title: 'استخدام برنامه نویس', isDone: false),
+                        ToDoWidgets(title: 'ساخت قالب', isDone: false),
+                      ],
+                    ),
+                  )),
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 10),
+                        width: 15,
+                        height: 15,
+                        decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            border: Border.all(
+                              color: Color.fromARGB(80, 0, 0, 0),
+                            ),
+                            borderRadius: BorderRadius.circular(4)),
+                      ),
+                      Expanded(
+                          child: TextField(
+                        decoration: const InputDecoration(
+                          hintText: "کار جدیدی اضافه کنید",
+                          border: InputBorder.none,
+                        ),
+                        style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                      ))
                     ],
-                  ))
+                  )
                 ],
               ),
             ),
