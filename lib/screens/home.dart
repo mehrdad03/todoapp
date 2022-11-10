@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todoapp/screens/task.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -108,20 +108,26 @@ class HomeScreenState extends State<HomeScreen> {
                   Positioned(
                       bottom: 10,
                       left: 0,
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.red,
-                        ),
-                        child: const Icon(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const TaskScreen()));
+                        },
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.red,
+                          ),
+                          child: const Icon(
                             Icons.add,
-                        color: Colors.white,
+                            color: Colors.white,
+                          ),
                         ),
-                      )
-
-                  )
+                      ))
                 ],
               ),
             ),
