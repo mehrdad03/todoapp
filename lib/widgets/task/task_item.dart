@@ -8,8 +8,10 @@ class TaskItem extends StatelessWidget {
   final BuildContext context;
   final int index;
   final Task task;
+  final Function updateTask;
 
-  const TaskItem({super.key,required this.context,required this.index, required this.task});
+
+   const TaskItem({super.key,required this.context,required this.index, required this.task,required this.updateTask});
 
 
   @override
@@ -21,6 +23,7 @@ class TaskItem extends StatelessWidget {
                 builder: (context) =>  TaskScreen(task:this.task)
             )
         );
+        updateTask(task);
 
       /*  if(task !=null){
           addTask(task);

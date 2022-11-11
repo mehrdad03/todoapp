@@ -67,7 +67,10 @@ class TaskScreenState extends State<TaskScreen> {
                             if (value != "") {
                               if (widget.task == null) {
                                 setState(() {
-                                  widget.task = Task(title: value);
+                                  widget.task = Task(
+                                      title: value,
+                                    id: DateTime.now().microsecondsSinceEpoch,
+                                  );
                                 });
                               } else {
                                 widget.task?.title = value;

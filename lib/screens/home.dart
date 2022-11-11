@@ -12,18 +12,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
+  List<Task> tasks = [];
 
-  List<Task>tasks=[];
-
-  void addNewTask(Task task){
+  void addNewTask(Task task) {
     setState(() {
       tasks.add(task);
     });
   }
-  
+
+  void updateTask(Task task) {
+    setState(() {
+     tasks= tasks.map((taskItem) {
+        if (taskItem.id == task.id) {
+          return task;
+        }
+        return taskItem;
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
@@ -49,17 +58,19 @@ class HomeScreenState extends State<HomeScreen> {
                           Icon(Icons.menu),
                         ],
                       ), //appBar
-                     HeroSection(),
+                      HeroSection(),
                       Expanded(
                           child: ListView.builder(
-                              itemCount:tasks.length,
+                              itemCount: tasks.length,
                               itemBuilder: (BuildContext context, int index) =>
-                                  TaskItem(context: context, index: index,task:tasks[index]))),
+                                  TaskItem(
+                                      context: context,
+                                      index: index,
+                                      task: tasks[index],
+                                  updateTask: updateTask))),
                     ],
                   ),
-                   AddTaskButton(
-                     addTask:addNewTask
-                   ),
+                  AddTaskButton(addTask: addNewTask),
                 ],
               ),
             ),
