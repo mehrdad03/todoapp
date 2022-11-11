@@ -22,12 +22,18 @@ class HomeScreenState extends State<HomeScreen> {
 
   void updateTask(Task task) {
     setState(() {
-     tasks= tasks.map((taskItem) {
+      tasks = tasks.map((taskItem) {
         if (taskItem.id == task.id) {
           return task;
         }
         return taskItem;
       }).toList();
+    });
+  }
+
+  void deleteTask(int taskId) {
+    setState(() {
+      tasks=tasks.where((task) => task.id !=taskId).toList();
     });
   }
 
@@ -67,7 +73,8 @@ class HomeScreenState extends State<HomeScreen> {
                                       context: context,
                                       index: index,
                                       task: tasks[index],
-                                  updateTask: updateTask))),
+                                      updateTask: updateTask,
+                                  deleteTask:deleteTask))),
                     ],
                   ),
                   AddTaskButton(addTask: addNewTask),

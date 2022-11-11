@@ -9,9 +9,10 @@ class TaskItem extends StatelessWidget {
   final int index;
   final Task task;
   final Function updateTask;
+  final Function deleteTask;
 
 
-   const TaskItem({super.key,required this.context,required this.index, required this.task,required this.updateTask});
+   const TaskItem({super.key,required this.context,required this.index, required this.task,required this.updateTask,required this.deleteTask});
 
 
   @override
@@ -57,10 +58,17 @@ class TaskItem extends StatelessWidget {
                       )
                     ],
                   )),
-              const Icon(
-                Icons.delete,
-                color: Colors.red,
-                size: 20,
+              GestureDetector(
+                onTap: (){
+
+                  deleteTask(task.id);
+                },
+                child: const Icon(
+
+                  Icons.delete,
+                  color: Colors.red,
+                  size: 20,
+                ),
               )
             ],
           ),
