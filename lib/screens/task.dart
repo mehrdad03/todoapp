@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/models/todo.dart';
 import 'dart:ui' as ui;
 
 import 'package:todoapp/widgets/to_do_widgets.dart';
@@ -11,6 +12,10 @@ class TaskScreen extends StatefulWidget {
 }
 
 class TaskScreenState extends State<TaskScreen> {
+  List<Todo> tasks = [];
+  TextEditingController newTodoInputController =
+      TextEditingController(); //for remove add new task input in footer
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -55,31 +60,36 @@ class TaskScreenState extends State<TaskScreen> {
                   ),
                   Expanded(
                       child: Padding(
-                    padding: EdgeInsets.only(top: 10),
-                    child: ListView(
-                      children: [
-                        ToDoWidgets(title: 'ثبت دامنه', isDone: true),
-                        ToDoWidgets(
-                            title: 'استخدام برنامه نویس', isDone: false),
-                        ToDoWidgets(title: 'ساخت قالب', isDone: false),
-                      ],
+                    padding: const EdgeInsets.only(top: 10),
+                    child: ListView.builder(
+                      itemCount: tasks.length,
+                      itemBuilder: (context, index) =>
+                          ToDoWidgets(title: tasks[index].title, isDone: false),
                     ),
                   )),
                   Row(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 10),
                         width: 15,
                         height: 15,
                         decoration: BoxDecoration(
                             color: Colors.grey[200],
                             border: Border.all(
-                              color: Color.fromARGB(80, 0, 0, 0),
+                              color: const Color.fromARGB(80, 0, 0, 0),
                             ),
                             borderRadius: BorderRadius.circular(4)),
                       ),
                       Expanded(
                           child: TextField(
+                        controller: newTodoInputController,
+                        onSubmitted: (value) {
+                          setState(() {
+                            tasks.add(Todo(title: value, isDone: false));
+                          });
+                          newTodoInputController.clear();
+                          // newTodoInputController.text='مهرداد';
+                        },
                         decoration: const InputDecoration(
                           hintText: "کار جدیدی اضافه کنید",
                           border: InputBorder.none,
