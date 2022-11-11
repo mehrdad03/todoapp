@@ -3,6 +3,7 @@ import 'package:todoapp/models/todo.dart';
 import 'dart:ui' as ui;
 
 import 'package:todoapp/widgets/to_do_widgets.dart';
+import 'package:todoapp/widgets/todo/add_new_to_do.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -13,8 +14,16 @@ class TaskScreen extends StatefulWidget {
 
 class TaskScreenState extends State<TaskScreen> {
   List<Todo> tasks = [];
-  TextEditingController newTodoInputController =
-      TextEditingController(); //for remove add new task input in footer
+
+
+
+
+  addTodo(value){
+    setState(() {
+      tasks.add(Todo(title: value, isDone: false));
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -81,21 +90,9 @@ class TaskScreenState extends State<TaskScreen> {
                             borderRadius: BorderRadius.circular(4)),
                       ),
                       Expanded(
-                          child: TextField(
-                        controller: newTodoInputController,
-                        onSubmitted: (value) {
-                          setState(() {
-                            tasks.add(Todo(title: value, isDone: false));
-                          });
-                          newTodoInputController.clear();
-                          // newTodoInputController.text='مهرداد';
-                        },
-                        decoration: const InputDecoration(
-                          hintText: "کار جدیدی اضافه کنید",
-                          border: InputBorder.none,
-                        ),
-                        style: TextStyle(color: Colors.grey[600], fontSize: 14),
-                      ))
+                          child: AddNewToDo(
+                            addTodo:addTodo
+                          ))
                     ],
                   )
                 ],
