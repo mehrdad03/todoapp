@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/models/task.dart';
 import 'package:todoapp/models/todo.dart';
 import 'dart:ui' as ui;
 
@@ -6,7 +7,9 @@ import 'package:todoapp/widgets/to_do_widgets.dart';
 import 'package:todoapp/widgets/todo/add_new_to_do.dart';
 
 class TaskScreen extends StatefulWidget {
-  const TaskScreen({super.key});
+  Task? task;
+
+  TaskScreen({super.key, this.task});
 
   @override
   State<StatefulWidget> createState() => TaskScreenState();
@@ -15,15 +18,24 @@ class TaskScreen extends StatefulWidget {
 class TaskScreenState extends State<TaskScreen> {
   List<Todo> tasks = [];
 
+  TextEditingController taskTitleController = TextEditingController();
+  TextEditingController taskDescriptionController = TextEditingController();
 
+  //for show default inputs value
+  @override
+  initState() {
+    super.initState();
+    if (widget.task != null) {
+      taskTitleController.text = widget.task?.title ?? "";
+      taskDescriptionController.text = widget.task?.description ?? "";
+    }
+  }
 
-
-  addTodo(value){
+  addTodo(value) {
     setState(() {
       tasks.add(Todo(title: value, isDone: false));
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -39,62 +51,86 @@ class TaskScreenState extends State<TaskScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.pop(context, widget.task);
                         },
                         child: Icon(
                           Icons.arrow_back_rounded,
                           color: Colors.grey[700],
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                           child: Padding(
                         padding: EdgeInsets.only(right: 20),
                         child: TextField(
-                          decoration: InputDecoration(
+                          controller: taskTitleController,
+                          onSubmitted: (value) {
+                            if (value != "") {
+                              if (widget.task == null) {
+                                setState(() {
+                                  widget.task = Task(title: value);
+                                });
+                              } else {
+                                widget.task?.title = value;
+                              }
+                            }
+                          },
+                          decoration: const InputDecoration(
                               hintText: 'عنون کار شما',
                               border: InputBorder.none),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ))
                     ],
                   ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      hintText: 'توضیح کار خود رو وراد کنید',
-                      border: InputBorder.none,
-                    ),
-                    minLines: 1,
-                    maxLines: 3,
-                  ),
-                  Expanded(
-                      child: Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: ListView.builder(
-                      itemCount: tasks.length,
-                      itemBuilder: (context, index) =>
-                          ToDoWidgets(title: tasks[index].title, isDone: false),
-                    ),
-                  )),
-                  Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        width: 15,
-                        height: 15,
-                        decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            border: Border.all(
-                              color: const Color.fromARGB(80, 0, 0, 0),
-                            ),
-                            borderRadius: BorderRadius.circular(4)),
-                      ),
-                      Expanded(
-                          child: AddNewToDo(
-                            addTodo:addTodo
-                          ))
-                    ],
-                  )
+                  Visibility(
+                      visible: widget.task != null,
+                      child: TextField(
+                        controller: taskDescriptionController,
+                        onSubmitted: (value) {
+                          widget.task?.description = value;
+                        },
+                        /*  onChanged: (value) {
+                          widget.task?.description = value;
+                        },*/
+
+                        decoration: const InputDecoration(
+                          hintText: 'توضیح کار خود رو وراد کنید',
+                          border: InputBorder.none,
+                        ),
+                        keyboardType: TextInputType.text,
+                        minLines: 1,
+                        maxLines: 3,
+                      )),
+                  Visibility(
+                      visible: widget.task != null,
+                      child: Expanded(
+                          child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: ListView.builder(
+                          itemCount: tasks.length,
+                          itemBuilder: (context, index) => ToDoWidgets(
+                              title: tasks[index].title, isDone: false),
+                        ),
+                      ))),
+                  Visibility(
+                      visible: widget.task != null,
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(left: 10),
+                            width: 15,
+                            height: 15,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                border: Border.all(
+                                  color: const Color.fromARGB(80, 0, 0, 0),
+                                ),
+                                borderRadius: BorderRadius.circular(4)),
+                          ),
+                          Expanded(child: AddNewToDo(addTodo: addTodo))
+                        ],
+                      ))
                 ],
               ),
             ),

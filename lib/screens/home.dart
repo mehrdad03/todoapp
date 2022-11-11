@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/models/task.dart';
 import 'package:todoapp/widgets/task/add_task_button.dart';
 import 'package:todoapp/widgets/task/hero_section.dart';
 import 'package:todoapp/widgets/task/task_item.dart';
@@ -11,8 +12,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
+
+  List<Task>tasks=[];
+
+  void addNewTask(Task task){
+    setState(() {
+      tasks.add(task);
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
+
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
@@ -41,12 +52,14 @@ class HomeScreenState extends State<HomeScreen> {
                      HeroSection(),
                       Expanded(
                           child: ListView.builder(
-                              itemCount: 10,
+                              itemCount:tasks.length,
                               itemBuilder: (BuildContext context, int index) =>
-                                  TaskItem(context: context, index: index))),
+                                  TaskItem(context: context, index: index,task:tasks[index]))),
                     ],
                   ),
-                  const AddTaskButton(),
+                   AddTaskButton(
+                     addTask:addNewTask
+                   ),
                 ],
               ),
             ),

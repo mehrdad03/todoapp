@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AddNewToDo extends StatelessWidget {
-
   TextEditingController newTodoInputController = TextEditingController();
   final Function addTodo;
 
@@ -13,7 +12,10 @@ class AddNewToDo extends StatelessWidget {
     return TextField(
       controller: newTodoInputController,
       onSubmitted: (value) {
-        addTodo(value);
+        if (value != "") {
+          addTodo(value);
+        }
+
         newTodoInputController.clear();
         // newTodoInputController.text='مهرداد';
       },

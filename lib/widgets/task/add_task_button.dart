@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import '../../models/task.dart';
 import '../../screens/task.dart';
 
 class AddTaskButton extends StatelessWidget {
+final Function addTask;
 
+ AddTaskButton({super.key, required this.addTask});
 
-
-  void switchToTaskCreateTask (context) {
-    Navigator.push(context,
+  void switchToTaskCreateTask (context) async {
+    Task? task=await Navigator.push(context,
         MaterialPageRoute(
-            builder: (context) => const TaskScreen()
+            builder: (context) =>  TaskScreen()
         )
     );
+
+    if(task !=null){
+      addTask(task);
+    }
   }
 
-  const AddTaskButton({super.key});
+
 
   @override
   Widget build(BuildContext context) {
