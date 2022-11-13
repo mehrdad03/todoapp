@@ -16,8 +16,6 @@ class TaskScreen extends StatefulWidget {
 }
 
 class TaskScreenState extends State<TaskScreen> {
-  List<Todo> tasks = [];
-
   TextEditingController taskTitleController = TextEditingController();
   TextEditingController taskDescriptionController = TextEditingController();
 
@@ -32,8 +30,9 @@ class TaskScreenState extends State<TaskScreen> {
   }
 
   addTodo(value) {
+    widget.task?.addNeTodo(value);
     setState(() {
-      tasks.add(Todo(title: value, isDone: false));
+      //refresh to dos list
     });
   }
 
@@ -69,8 +68,8 @@ class TaskScreenState extends State<TaskScreen> {
                                 setState(() {
                                   widget.task = Task(
                                       title: value,
-                                    id: DateTime.now().microsecondsSinceEpoch,
-                                  );
+                                      id: DateTime.now().microsecondsSinceEpoch,
+                                      todos: []);
                                 });
                               } else {
                                 widget.task?.title = value;
@@ -111,9 +110,16 @@ class TaskScreenState extends State<TaskScreen> {
                           child: Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: ListView.builder(
-                          itemCount: tasks.length,
+                          itemCount: widget.task?.todos.length ?? 0,
                           itemBuilder: (context, index) => ToDoWidgets(
-                              title: tasks[index].title, isDone: false),
+                              title: widget.task?.todos[index].title ?? "",
+                              isDone: widget.task?.todos[index].isDone ?? false,
+                          toggleDone:(){
+                                widget.task?.toggleDoneTodo(widget.task?.todos[index].id);
+                                setState(() {
+                                  //for refresh
+                                });
+                          }),
                         ),
                       ))),
                   Visibility(
